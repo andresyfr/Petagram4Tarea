@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Petagram</string>
+    <string name="nombre">Andres Caicedo</string>
+    <string name="telefono">5555555</string>
+    <string name="email">andresyfr@gmail.com</string>
+    <string name="pImagen">Imagen</string>
+    <string name="pNombre">Nombre</string>
+    <string name="pCalificacion">Calificación</string>
+</resources>
