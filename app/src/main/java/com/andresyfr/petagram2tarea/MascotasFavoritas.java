@@ -5,10 +5,13 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+
+import com.andresyfr.petagram2tarea.adapter.MascotaAdaptador;
+import com.andresyfr.petagram2tarea.controlador.Acciones;
+import com.andresyfr.petagram2tarea.pojo.Mascota;
 
 import java.util.ArrayList;
 
@@ -39,9 +42,9 @@ public class MascotasFavoritas extends AppCompatActivity {
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
 
-        listaMascotasFavoritas.setLayoutManager(llm);
-        //inicializarListaContactos();
-        //inicializarAdaptador();
+        //listaMascotasFavoritas.setLayoutManager(llm);
+        inicializarListaContactos();
+        inicializarAdaptador();
 
     }
 

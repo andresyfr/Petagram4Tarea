@@ -1,4 +1,4 @@
-package com.andresyfr.petagram2tarea;
+package com.andresyfr.petagram2tarea.adapter;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -6,10 +6,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.andresyfr.petagram2tarea.DetalleMascota;
+import com.andresyfr.petagram2tarea.R;
+import com.andresyfr.petagram2tarea.pojo.Mascota;
 
 import java.util.ArrayList;
 
@@ -17,21 +20,17 @@ import java.util.ArrayList;
  * Created by andres on 16/02/17.
  */
 
-public class MascotaAdaptador extends RecyclerView.Adapter<MascotaAdaptador.ContactoViewHolder>{
+public class PerfilAdaptador extends RecyclerView.Adapter<PerfilAdaptador.ContactoViewHolder>{
 
     public static class ContactoViewHolder extends RecyclerView.ViewHolder{
 
         private ImageView imgVFotoMascotaCV;
-        private ImageView imgBFavoritosCV;
-        private TextView tvNombreMascoraCV;
         private TextView tvCalificacionCv;
         private ImageView imgVImagenCalificacionCv;
 
         public ContactoViewHolder(View itemView) {
             super(itemView);
             imgVFotoMascotaCV         = (ImageView)itemView.findViewById(R.id.imgVFotoMascotaCV);
-            imgBFavoritosCV      = (ImageView) itemView.findViewById(R.id.imgBFavoritosCV);
-            tvNombreMascoraCV    = (TextView)itemView.findViewById(R.id.tvNombreMascoraCV);
             tvCalificacionCv         = (TextView)itemView.findViewById(R.id.tvCalificacionCv);
             imgVImagenCalificacionCv         = (ImageView)itemView.findViewById(R.id.imgVImagenCalificacionCv);
         }
@@ -45,7 +44,7 @@ public class MascotaAdaptador extends RecyclerView.Adapter<MascotaAdaptador.Cont
      * @param contactos
      * @param activity
      */
-    public MascotaAdaptador(ArrayList<Mascota> contactos, Activity activity){
+    public PerfilAdaptador(ArrayList<Mascota> contactos, Activity activity){
         this.mascotas = contactos;
         this.activity=activity;
     }
@@ -53,7 +52,7 @@ public class MascotaAdaptador extends RecyclerView.Adapter<MascotaAdaptador.Cont
     //Infla el layout y lo pasara al viewholder para que obtenga los view
     @Override
     public ContactoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_mascota, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_perfil_mascota, parent, false);
         return new ContactoViewHolder(v);
     }
 
@@ -62,8 +61,6 @@ public class MascotaAdaptador extends RecyclerView.Adapter<MascotaAdaptador.Cont
     public void onBindViewHolder(ContactoViewHolder contactoViewHolder, int position) {
         final Mascota mascota = mascotas.get(position);
         contactoViewHolder.imgVFotoMascotaCV.setImageResource(mascota.getFotoMascota());
-        contactoViewHolder.imgBFavoritosCV.setImageResource(mascota.isFavorito()?R.drawable.hueso_lleno:R.drawable.hueso_blanco);
-        contactoViewHolder.tvNombreMascoraCV.setText(mascota.getNombreMascota());
         contactoViewHolder.tvCalificacionCv.setText(mascota.getCalificacion()+"");
         contactoViewHolder.imgVImagenCalificacionCv.setImageResource(mascota.getCalificacion()>0?R.drawable.hueso_lleno:R.drawable.hueso_blanco);
 
@@ -74,7 +71,6 @@ public class MascotaAdaptador extends RecyclerView.Adapter<MascotaAdaptador.Cont
 
                 Intent intent = new Intent(activity, DetalleMascota.class);
                     intent.putExtra(activity.getResources().getString(R.string.pImagen), mascota.getFotoMascota());
-                    intent.putExtra(activity.getResources().getString(R.string.pNombre), mascota.getNombreMascota());
                     intent.putExtra(activity.getResources().getString(R.string.pCalificacion), mascota.getCalificacion());
                     intent.putExtra("Mascota", mascota);
                 activity.startActivity(intent);

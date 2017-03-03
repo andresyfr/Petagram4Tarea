@@ -6,4 +6,16 @@
     <string name="pImagen">Imagen</string>
     <string name="pNombre">Nombre</string>
     <string name="pCalificacion">Calificación</string>
+    <string name="pCorreo">Correo</string>
+    <string name="pMensaje">Mensaje</string>
+    <string name="pTelefono">Teléfono</string>
+
+    <string name="tituloBiografia">Biografia del Programador</string>
+    <string name="nombreBiografia">Andres Felipe Ramirez Caicedo</string>
+    <string name="telefonoBiografia">3214807626</string>
+    <string name="correoBiografia">andresyfr@gmail.com</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

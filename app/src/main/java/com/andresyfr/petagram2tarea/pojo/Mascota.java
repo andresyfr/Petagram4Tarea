@@ -1,4 +1,4 @@
-package com.andresyfr.petagram2tarea;
+package com.andresyfr.petagram2tarea.pojo;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -21,6 +21,10 @@ public class Mascota implements Serializable {
         this.nombreMascota = nombreMascota;
         this.favorito = favorito;
         this.calificacion = calificacion;
+    }
+
+    public Mascota() {
+
     }
 
     public int getFotoMascota() {
@@ -53,6 +57,13 @@ public class Mascota implements Serializable {
 
     public void setCalificacion(int calificacion) {
         this.calificacion = calificacion;
+    }
+
+    public Mascota setMascota(Mascota mas){
+        this.setCalificacion(mas.getCalificacion());
+        this.setFavorito(mas.isFavorito());
+        this.setFotoMascota(mas.getFotoMascota());
+        return this;
     }
 
     @Override

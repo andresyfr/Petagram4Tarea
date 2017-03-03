@@ -1,11 +1,17 @@
-package com.andresyfr.petagram2tarea;
+package com.andresyfr.petagram2tarea.controlador;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+
+import com.andresyfr.petagram2tarea.BiografiaActivity;
+import com.andresyfr.petagram2tarea.Correo.MenuContacto;
+import com.andresyfr.petagram2tarea.MascotasFavoritas;
+import com.andresyfr.petagram2tarea.R;
+import com.andresyfr.petagram2tarea.pojo.Mascota;
+
 import java.util.ArrayList;
 
 /**
@@ -46,14 +52,23 @@ public class Acciones implements View.OnClickListener{
     }
 
     public boolean accionesMune(MenuItem item, boolean superOption, Activity activity){
+        Intent intent=null;
         switch (item.getItemId()) {
             case R.id.actionFavoritos:
-                Intent intent=new Intent(activity, MascotasFavoritas.class);
+                intent=new Intent(activity, MascotasFavoritas.class);
                 activity.startActivity(intent);
                 //Log.i("ActionBar", "actionFavoritos!");
                 return true;
             case R.id.actionAcercaDe:
+                intent=new Intent(activity, BiografiaActivity.class);
+                activity.startActivity(intent);
                 Toast.makeText(activity.getApplicationContext(),"Aplicación realizada por ANDRES FELIPE RAMIREZ CAICEDO: andresyfr@gmail.com",Toast.LENGTH_SHORT).show();
+                //Log.i("ActionBar", "acerca de!");;
+                return true;
+            case R.id.actionContacto:
+                intent=new Intent(activity, MenuContacto.class);
+                activity.startActivity(intent);
+                Toast.makeText(activity.getApplicationContext(),"Contacto Aplicación realizada por ANDRES FELIPE RAMIREZ CAICEDO: andresyfr@gmail.com",Toast.LENGTH_SHORT).show();
                 //Log.i("ActionBar", "acerca de!");;
                 return true;
             default:

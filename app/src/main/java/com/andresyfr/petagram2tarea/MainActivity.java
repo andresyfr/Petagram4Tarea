@@ -1,46 +1,72 @@
 package com.andresyfr.petagram2tarea;
 
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Toast;
+
+import com.andresyfr.petagram2tarea.adapter.MascotaAdaptador;
+import com.andresyfr.petagram2tarea.adapter.PageAdapter;
+import com.andresyfr.petagram2tarea.controlador.Acciones;
+import com.andresyfr.petagram2tarea.fragment.PerfilFragment;
+import com.andresyfr.petagram2tarea.fragment.RecyclerViewFragment;
+import com.andresyfr.petagram2tarea.pojo.Mascota;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
 
-    private ArrayList<Mascota> mascotas;
-    private RecyclerView listaMascotas;
-    private MascotaAdaptador mascotaAdaptador;
-
     private Acciones accionesMenus;
+
+    private Toolbar toolbar;
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        accionesMenus = Acciones.getInstance();
+
+        toolbar=(Toolbar)findViewById(R.id.toolBar);
+        tabLayout=(TabLayout) findViewById(R.id.tapLayout);
+        viewPager=(ViewPager) findViewById(R.id.viewPager);
+
+        setUpViewPager();
+
+        accionesMenus= Acciones.getInstance();
 
         Toolbar miActionBar = (Toolbar) findViewById(R.id.miActionBar);
         setSupportActionBar(miActionBar);
 
-        listaMascotas = (RecyclerView) findViewById(R.id.rvLstMascotas);
 
-        LinearLayoutManager llm = new LinearLayoutManager(this);
-        llm.setOrientation(LinearLayoutManager.VERTICAL);
-
-        listaMascotas.setLayoutManager(llm);
-        //inicializarListaContactos();
-        //inicializarAdaptador();
+        if(toolbar!=null){
+            setSupportActionBar(toolbar);
+        }
 
     }
+
+    private ArrayList<Fragment> agregarFragments(){
+        ArrayList<Fragment> fragments = new ArrayList<>();
+        fragments.add(new RecyclerViewFragment());
+        fragments.add(new PerfilFragment());
+        return fragments;
+    }
+
+    private void setUpViewPager(){
+        viewPager.setAdapter(new PageAdapter(getSupportFragmentManager(),agregarFragments()));
+        tabLayout.setupWithViewPager(viewPager);
+        tabLayout.getTabAt(0).setIcon(R.drawable.ic_action_name);
+        tabLayout.getTabAt(1).setIcon(R.drawable.ic_action_cara_panda);
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -54,18 +80,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         return accionesMenus.accionesMune(item, super.onOptionsItemSelected(item), this);
     }
 
-    public void inicializarListaContactos(){
-        mascotas = accionesMenus.getMascotas();
-    }
-
-    public void inicializarAdaptador(){
-        mascotaAdaptador = new MascotaAdaptador(mascotas,this);
-        listaMascotas.setAdapter(mascotaAdaptador);
-
-        mascotaAdaptador.notifyDataSetChanged();
-        //invalidateViews();
-
-    }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -80,14 +94,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     @Override
     protected void onResume() {
         super.onResume();
-        inicializarListaContactos();
-        inicializarAdaptador();
+        //setUpViewPager();
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
-        inicializarListaContactos();
-        inicializarAdaptador();
+        setUpViewPager();
     }
+
 }

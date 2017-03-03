@@ -8,9 +8,4 @@
         android:icon="@android:drawable/ic_menu_info_details"
         android:orderInCategory="100"
         app:showAsAction="never"/>
-    <item android:title="Acerca de..."
-        android:id="@+id/actionAcercaDe"
-        android:icon="@android:drawable/ic_menu_info_details"
-        android:orderInCategory="200"
-        app:showAsAction="never"/>
 </menu>
