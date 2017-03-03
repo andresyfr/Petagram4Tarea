@@ -42,7 +42,7 @@ public class MascotasFavoritas extends AppCompatActivity {
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
 
-        //listaMascotasFavoritas.setLayoutManager(llm);
+        listaMascotasFavoritas.setLayoutManager(llm);
         inicializarListaContactos();
         inicializarAdaptador();
 
