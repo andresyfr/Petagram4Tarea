@@ -5,10 +5,11 @@
     <string name="email">andresyfr@gmail.com</string>
     <string name="pImagen">Imagen</string>
     <string name="pNombre">Nombre</string>
-    <string name="pCalificacion">Calificación</string>
+    <string name="pCalificacion">Última Calificación</string>
     <string name="pCorreo">Correo</string>
     <string name="pMensaje">Mensaje</string>
     <string name="pTelefono">Teléfono</string>
+    <string name="plikes">0 Likes</string>
 
     <string name="tituloBiografia">Biografia del Programador</string>
     <string name="nombreBiografia">Andres Felipe Ramirez Caicedo</string>

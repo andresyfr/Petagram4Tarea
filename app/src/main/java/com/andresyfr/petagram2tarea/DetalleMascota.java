@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.andresyfr.petagram2tarea.controlador.Acciones;
+import com.andresyfr.petagram2tarea.db.ConstructorMascotas;
 import com.andresyfr.petagram2tarea.pojo.Mascota;
 
 public class DetalleMascota extends AppCompatActivity {
@@ -28,6 +29,7 @@ public class DetalleMascota extends AppCompatActivity {
     private Mascota mascota;
 
     private boolean favorito = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +72,10 @@ public class DetalleMascota extends AppCompatActivity {
                 try {
                     int calificacion=Integer.parseInt(edTexCalificacion.getText().toString());
 
+                    ConstructorMascotas constructorMascotas = new ConstructorMascotas(DetalleMascota.this);
+                    constructorMascotas.darLikeMascota(mascota);
+                    mascota.setCalificacion(mascota.getCalificacion()+1);
+                    accionesMenus.anadirMascotaFavorita(mascota);
                     boolean cambio=accionesMenus.cambiarDatosMascotas(mascota,new Mascota(imagen,nombre,favorito,calificacion));
                     if(cambio)Toast.makeText(DetalleMascota.this,"Mascota "+mascota.getNombreMascota()+" Guardada Correctamente!",Toast.LENGTH_SHORT).show(); else Toast.makeText(DetalleMascota.this,"Error al guardar la mascota "+mascota.getNombreMascota()+"!",Toast.LENGTH_SHORT).show();
                     finish();
@@ -83,7 +89,7 @@ public class DetalleMascota extends AppCompatActivity {
 
         imgVFotoMascota.setImageResource(imagen);
         tvNombreMascota.setText(nombre);
-        imgBHuesoCalificacion.setImageResource(calificacion>0?R.drawable.hueso_lleno:R.drawable.hueso_blanco);
+        imgBHuesoCalificacion.setImageResource(calificacion>0?R.drawable.hueso_lleno:R.drawable.hueso_lleno);
         edTexCalificacion.setText(calificacion+"");
     }
 
@@ -92,7 +98,7 @@ public class DetalleMascota extends AppCompatActivity {
             imgBHuesoCalificacion.setImageResource(R.drawable.hueso_lleno);
             favorito=true;
         }else{
-            imgBHuesoCalificacion.setImageResource(R.drawable.hueso_blanco);
+            imgBHuesoCalificacion.setImageResource(R.drawable.hueso_lleno);
             favorito=false;
         }
         System.out.println("mascota es +"+mascota);
@@ -100,13 +106,13 @@ public class DetalleMascota extends AppCompatActivity {
 
     private void modificarFavorito(){
         if(favorito){
-            imgBHuesoCalificacion.setImageResource(R.drawable.hueso_blanco);
+            imgBHuesoCalificacion.setImageResource(R.drawable.hueso_lleno);
             favorito=false;
-            Toast.makeText(DetalleMascota.this,""+mascota.getNombreMascota()+" ya no pertenece a tus favoritos!",Toast.LENGTH_SHORT).show();
+            //Toast.makeText(DetalleMascota.this,""+mascota.getNombreMascota()+" ya no pertenece a tus favoritos!",Toast.LENGTH_SHORT).show();
         }else{
             imgBHuesoCalificacion.setImageResource(R.drawable.hueso_lleno);
             favorito=true;
-            Toast.makeText(DetalleMascota.this,""+mascota.getNombreMascota()+" ahora pertenece a tus favoritos!",Toast.LENGTH_SHORT).show();
+            //Toast.makeText(DetalleMascota.this,""+mascota.getNombreMascota()+" ahora pertenece a tus favoritos!",Toast.LENGTH_SHORT).show();
         }
     }
 

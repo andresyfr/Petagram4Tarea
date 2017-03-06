@@ -13,6 +13,8 @@ import com.andresyfr.petagram2tarea.R;
 import com.andresyfr.petagram2tarea.pojo.Mascota;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Stack;
 
 /**
  * Created by andres on 18/02/17.
@@ -22,17 +24,10 @@ public class Acciones implements View.OnClickListener{
 
     /**objeto Singleton*/
     private static Acciones singlenAcciones=null;
-    private ArrayList<Mascota> mascotas;
+    private ArrayList<Mascota> ultimasMascotasFavoritas;
 
     private Acciones(){
-        this.mascotas=new ArrayList<Mascota>();
-        mascotas.add(new Mascota(R.drawable.conejo,"Conejo Pancho", true, 5));
-        mascotas.add(new Mascota(R.drawable.gato,"Gato Pancho", false, 4));
-        mascotas.add(new Mascota(R.drawable.pato,"Pato Donald", true, 3));
-        mascotas.add(new Mascota(R.drawable.tortuga,"Tortuga Nija", false, 2));
-        mascotas.add(new Mascota(R.drawable.perro,"Perro Dalmata", true, 4));
-        mascotas.add(new Mascota(R.drawable.perro2,"Perra lika", true, 5));
-        mascotas.add(new Mascota(R.drawable.perro3,"Perro Lufi", true, 5));
+        this.ultimasMascotasFavoritas = new ArrayList< Mascota>();
     }
 
     public static Acciones getInstance() {
@@ -78,16 +73,40 @@ public class Acciones implements View.OnClickListener{
 
     public boolean cambiarDatosMascotas(Mascota mascotaOriginal, Mascota mascotaCambiada){
         int i=0;
-        while (i<mascotas.size()){
-            if(mascotas.get(i).getCalificacion()==mascotaOriginal.getCalificacion() && mascotas.get(i).getNombreMascota().equals(mascotaOriginal.getNombreMascota()) && mascotas.get(i).getFotoMascota() == mascotaOriginal.getFotoMascota()){
-                mascotas.set(i,mascotaCambiada);
+        while (i< ultimasMascotasFavoritas.size()){
+            if(ultimasMascotasFavoritas.get(i).getCalificacion()==mascotaOriginal.getCalificacion() && ultimasMascotasFavoritas.get(i).getNombreMascota().equals(mascotaOriginal.getNombreMascota()) && ultimasMascotasFavoritas.get(i).getFotoMascota() == mascotaOriginal.getFotoMascota()){
+                ultimasMascotasFavoritas.set(i,mascotaCambiada);
                 return true;
             }
             i++;
         }return false;
     }
 
-    public ArrayList<Mascota> getMascotas() {
-        return mascotas;
+    public boolean anadirMascotaFavorita(Mascota mascota){
+        if(mascota.getCalificacion()>0) {
+            if (ultimasMascotasFavoritas.size() >= 5) {
+                ultimasMascotasFavoritas.remove(0);
+                ultimasMascotasFavoritas.add(mascota);
+            } else {
+                ultimasMascotasFavoritas.add(mascota);
+            }
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    private int idRepetido(Mascota mascota){
+        int i=0;
+        while (i<ultimasMascotasFavoritas.size()){
+            if(ultimasMascotasFavoritas.get(i).getId()==mascota.getId()){
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public ArrayList<Mascota> getUltimasMascotasFavoritas() {
+        return ultimasMascotasFavoritas;
     }
 }

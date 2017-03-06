@@ -11,6 +11,7 @@ import java.io.Serializable;
 @SuppressWarnings("serial")
 public class Mascota implements Serializable {
 
+    private int id;
     private int fotoMascota;
     private String nombreMascota;
     private boolean favorito;
@@ -64,6 +65,14 @@ public class Mascota implements Serializable {
         this.setFavorito(mas.isFavorito());
         this.setFotoMascota(mas.getFotoMascota());
         return this;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override

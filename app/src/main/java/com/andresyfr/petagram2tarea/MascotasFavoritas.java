@@ -11,15 +11,18 @@ import android.widget.Toast;
 
 import com.andresyfr.petagram2tarea.adapter.MascotaAdaptador;
 import com.andresyfr.petagram2tarea.controlador.Acciones;
+import com.andresyfr.petagram2tarea.db.ConstructorMascotas;
 import com.andresyfr.petagram2tarea.pojo.Mascota;
+import com.andresyfr.petagram2tarea.presentador.IRecyclerViewFragmentPresenter;
 
 import java.util.ArrayList;
 
-public class MascotasFavoritas extends AppCompatActivity {
+public class MascotasFavoritas extends AppCompatActivity implements IRecyclerViewFragmentPresenter {
 
     private ArrayList<Mascota> mascotasFavoritas;
     private RecyclerView listaMascotasFavoritas;
     private MascotaAdaptador mascotaAdaptadorFavoritas;
+    private ConstructorMascotas constructorMascotas;
 
     private Acciones acciones;
 
@@ -29,6 +32,7 @@ public class MascotasFavoritas extends AppCompatActivity {
         setContentView(R.layout.activity_mascotas_favoritas);
 
         acciones = Acciones.getInstance();
+        constructorMascotas = new ConstructorMascotas(this);
         mascotasFavoritas = new ArrayList<Mascota>();
 
 
@@ -61,13 +65,7 @@ public class MascotasFavoritas extends AppCompatActivity {
     }
 
     public void inicializarListaContactos(){
-        mascotasFavoritas.clear();
-        ArrayList<Mascota> todas = acciones.getMascotas();
-        for (Mascota mascotasFavorita:todas) {
-            if(mascotasFavorita.isFavorito()) {
-                mascotasFavoritas.add(mascotasFavorita);
-            }
-        }
+        mascotasFavoritas = constructorMascotas.obtenerDatosFavoritos();
         if(mascotasFavoritas.isEmpty())Toast.makeText(MascotasFavoritas.this,"No tienes mascotas Favoritas!",Toast.LENGTH_SHORT).show();
     }
 
@@ -89,5 +87,15 @@ public class MascotasFavoritas extends AppCompatActivity {
         super.onRestart();
         inicializarListaContactos();
         inicializarAdaptador();
+    }
+
+    @Override
+    public void obtenerContactosBaseDatos() {
+
+    }
+
+    @Override
+    public void mostrarContactosRV() {
+
     }
 }

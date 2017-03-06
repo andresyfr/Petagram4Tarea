@@ -1,4 +1,4 @@
-package com.andresyfr.petagram2tarea.fragment;
+package com.andresyfr.petagram2tarea.vista.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,6 +13,8 @@ import com.andresyfr.petagram2tarea.R;
 import com.andresyfr.petagram2tarea.adapter.MascotaAdaptador;
 import com.andresyfr.petagram2tarea.controlador.Acciones;
 import com.andresyfr.petagram2tarea.pojo.Mascota;
+import com.andresyfr.petagram2tarea.presentador.IRecyclerViewFragmentPresenter;
+import com.andresyfr.petagram2tarea.presentador.RecyclerViewFragmentPresentador;
 
 import java.util.ArrayList;
 
@@ -20,11 +22,12 @@ import java.util.ArrayList;
  * Created by andres on 2/03/17.
  */
 
-public class RecyclerViewFragment extends Fragment{
+public class RecyclerViewFragment extends Fragment implements IRecyvlerViewFragmentView{
 
     private ArrayList<Mascota> mascotas;
     private RecyclerView listaMascotas;
-    private MascotaAdaptador mascotaAdaptador;
+    private IRecyclerViewFragmentPresenter presenter;
+
 
     private Acciones accionesMenus;
 
@@ -34,19 +37,36 @@ public class RecyclerViewFragment extends Fragment{
         //return super.onCreateView(inflater, container, savedInstanceState);
         View v = inflater.inflate(R.layout.fragment_recyclerview, container, false);
 
-
         accionesMenus = Acciones.getInstance();
 
         listaMascotas = (RecyclerView) v.findViewById(R.id.rvLstMascotas);
 
+        presenter = new RecyclerViewFragmentPresentador(this,getContext());
+        //inicializarListaContactos();
+
+
+        return v;
+    }
+
+    @Override
+    public void generarLinearLayoutVertical() {
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
 
         listaMascotas.setLayoutManager(llm);
-        inicializarListaContactos();
-        inicializarAdaptador();
+    }
 
-        return v;
+    @Override
+    public MascotaAdaptador crearAdaptador(ArrayList<Mascota> mascotas) {
+        MascotaAdaptador mascotaAdaptador = new MascotaAdaptador(mascotas,getActivity());
+        return mascotaAdaptador;
+    }
+
+    @Override
+    public void inicializarAdaptadorRV(MascotaAdaptador adaptador) {
+        listaMascotas.setAdapter(adaptador);
+        adaptador.notifyDataSetChanged();
+        //invalidateViews();
     }
 
     /*
@@ -65,17 +85,10 @@ public class RecyclerViewFragment extends Fragment{
     }
 */
 
+/*
     public void inicializarListaContactos(){
-        mascotas = accionesMenus.getMascotas();
+        mascotas = accionesMenus.getUltimasMascotasFavoritas();
     }
-
-    public void inicializarAdaptador(){
-        mascotaAdaptador = new MascotaAdaptador(mascotas,getActivity());
-        listaMascotas.setAdapter(mascotaAdaptador);
-
-        mascotaAdaptador.notifyDataSetChanged();
-        //invalidateViews();
-
-    }
+*/
 
 }

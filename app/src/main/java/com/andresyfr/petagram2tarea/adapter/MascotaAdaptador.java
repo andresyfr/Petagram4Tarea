@@ -11,6 +11,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.andresyfr.petagram2tarea.DetalleMascota;
+import com.andresyfr.petagram2tarea.controlador.Acciones;
+import com.andresyfr.petagram2tarea.db.ConstructorMascotas;
 import com.andresyfr.petagram2tarea.pojo.Mascota;
 import com.andresyfr.petagram2tarea.R;
 
@@ -42,6 +44,7 @@ public class MascotaAdaptador extends RecyclerView.Adapter<MascotaAdaptador.Cont
 
     private ArrayList<Mascota> mascotas;
     private Activity activity;
+    private Acciones acciones;
 
     /**
      * si es 0 Detalle mascota, si es 1 Mascotas Favoritas
@@ -51,6 +54,7 @@ public class MascotaAdaptador extends RecyclerView.Adapter<MascotaAdaptador.Cont
     public MascotaAdaptador(ArrayList<Mascota> contactos, Activity activity){
         this.mascotas = contactos;
         this.activity=activity;
+        this.acciones = Acciones.getInstance();
     }
 
     //Infla el layout y lo pasara al viewholder para que obtenga los view
@@ -62,10 +66,10 @@ public class MascotaAdaptador extends RecyclerView.Adapter<MascotaAdaptador.Cont
 
     //asocia cada elemento de la lista con cada view
     @Override
-    public void onBindViewHolder(ContactoViewHolder contactoViewHolder, int position) {
+    public void onBindViewHolder(final ContactoViewHolder contactoViewHolder, int position) {
         final Mascota mascota = mascotas.get(position);
         contactoViewHolder.imgVFotoMascotaCV.setImageResource(mascota.getFotoMascota());
-        contactoViewHolder.imgBFavoritosCV.setImageResource(mascota.isFavorito()?R.drawable.hueso_lleno:R.drawable.hueso_blanco);
+        contactoViewHolder.imgBFavoritosCV.setImageResource(mascota.isFavorito()?R.drawable.hueso_lleno:R.drawable.hueso_lleno);
         contactoViewHolder.tvNombreMascoraCV.setText(mascota.getNombreMascota());
         contactoViewHolder.tvCalificacionCv.setText(mascota.getCalificacion()+"");
         contactoViewHolder.imgVImagenCalificacionCv.setImageResource(mascota.getCalificacion()>0?R.drawable.hueso_lleno:R.drawable.hueso_blanco);
@@ -86,12 +90,19 @@ public class MascotaAdaptador extends RecyclerView.Adapter<MascotaAdaptador.Cont
             }
         });
 
-        /*contactoViewHolder.btnLike.setOnClickListener(new View.OnClickListener() {
+
+
+        contactoViewHolder.imgBFavoritosCV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ConstructorMascotas constructorMascotas = new ConstructorMascotas(activity);
+                constructorMascotas.darLikeMascota(mascota);
+                mascota.setCalificacion(mascota.getCalificacion()+1);
+                acciones.anadirMascotaFavorita(mascota);
+                contactoViewHolder.tvCalificacionCv.setText(constructorMascotas.obtenerLikeMascota(mascota)+"");
                 Toast.makeText(activity,"Diste like a "+mascota.getNombreMascota(),Toast.LENGTH_SHORT).show();
             }
-        });*/
+        });
     }
 
     @Override
